@@ -1,23 +1,23 @@
+SECTION .bss
+char_buffer resb 1
+
 SECTION .text
 global print_char
-
-; ---------------------------------
-; print_char
-; Entrada:
-;   AL = caracter a imprimir
-; ---------------------------------
 
 print_char:
 
     push ebp
     mov ebp, esp
 
-    ; TODO:
-    ; 1. Guardar el caracter en memoria
-    ; 2. Usar syscall write
-    ; 3. Imprimir 1 byte
+    ; guardar el caracter recibido en AL
+    mov [char_buffer], al
 
-    ; write(fd=1, buffer, 1)
+    ; llamada al sistema write
+    mov eax, 4        ; sys_write
+    mov ebx, 1        ; stdout
+    mov ecx, char_buffer
+    mov edx, 1        ; imprimir 1 byte
+    int 0x80
 
     mov esp, ebp
     pop ebp
