@@ -4,11 +4,6 @@ buffer_int resb 12
 SECTION .text
 global print_int
 
-; -------------------------
-; print_int
-; Entrada: EAX = entero a imprimir
-; -------------------------
-
 print_int:
 
     push ebp
@@ -20,14 +15,13 @@ print_int:
     mov byte [edi], 10
     dec edi
 
-    xor ecx, ecx          ; bandera para positivo
+    xor ecx, ecx
 
     cmp ebx, 0
     jge .convert
 
-    ; si es negativo, imprimir '-'
     neg ebx
-    mov ecx, 1          ; marcar negativo
+    mov ecx, 1
 
 .convert:
 
@@ -63,14 +57,13 @@ print_int:
 
 .print:
 
-    inc edi             ; apuntar al primer dígito    
-    
-    ; syscall Linux write: eax=4, ebx=1(stdout), ecx=ptr, edx=len
+    inc edi
+
     mov eax, 4
     mov ebx, 1
     mov ecx, edi
     mov edx, buffer_int + 12
-    sub edx, edi                ; Obtiene el tamaño de la cadena
+    sub edx, edi
     int 0x80
 
     mov esp, ebp
