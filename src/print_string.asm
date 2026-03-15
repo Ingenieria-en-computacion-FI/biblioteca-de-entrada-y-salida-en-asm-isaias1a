@@ -13,11 +13,10 @@ print_string:
     push ebp
     mov ebp, esp
 
-    mov ecx, eax      ; ECX apunta al inicio de la cadena
-    xor edx, edx      ; contador de longitud = 0
+    mov ecx, eax
+    xor edx, edx
 
 .loop:
-
     cmp byte [ecx], 0
     je .print
 
@@ -26,11 +25,9 @@ print_string:
     jmp .loop
 
 .print:
-
-    mov ecx, eax      ; dirección original de la cadena
-
-    mov ebx, 1        ; stdout
-    mov eax, 4        ; sys_write
+    mov ecx, eax
+    mov eax, 4
+    mov ebx, 1
     int 0x80
 
     mov esp, ebp
